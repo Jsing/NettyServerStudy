@@ -1,7 +1,6 @@
 package netty.netty.study.data;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 @AllArgsConstructor
 public class ConnectionTag {
@@ -20,4 +19,12 @@ public class ConnectionTag {
     public int getEquipmentId() {
         return equipmentId;
     }
+
+    /**
+     * 접속 여부 (세터)
+     */
+    public void setConnected(boolean connected) {
+        System.out.println("Connection Status : "+connected);
+    }
+
 }

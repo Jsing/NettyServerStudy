@@ -85,44 +85,7 @@ public class ConnectTest {
         Assertions.assertEquals(testMessage, msgReceived);
     }
 
-    @Test
-    @DisplayName("Study Netty Thread Model")
-    @SneakyThrows
-    void studyNettyThreadModel() {
-        System.out.println("connectUntilSuccess() --------------------------- ");
-        client.connectUntilSuccess(ServerAddress.info());
-        Thread.sleep(1000);
 
-        System.out.println("scheduleAtFixedRate(1) --------------------------- ");
-        client.beginUserTask(() -> {
-            try {
-                client.send("1");
-                System.out.println("1 =" + Thread.currentThread().toString());
-            } catch (CancellationException e) {
-                e.printStackTrace();
-            }
-        }, 0, 1000, TimeUnit.MILLISECONDS);
-        Thread.sleep(1000);
-
-        System.out.println("disconnect() --------------------------- ");
-        client.disconnect();
-        Thread.sleep(1000);
-
-        System.out.println("connectUntilSuccess() --------------------------- ");
-        client.connectUntilSuccess(ServerAddress.info());
-        Thread.sleep(1000);
-
-        System.out.println("scheduleAtFixedRate(2) --------------------------- ");
-        client.beginUserTask(() -> {
-            client.send("2");
-            System.out.println("2 =" + Thread.currentThread().toString());
-        }, 0, 1000, TimeUnit.MILLISECONDS);
-        Thread.sleep(1000);
-
-        System.out.println("disconnect() --------------------------- ");
-        client.disconnect();
-        Thread.sleep(1000);
-    }
 
     @DisplayName("Server->Client")
     @SneakyThrows

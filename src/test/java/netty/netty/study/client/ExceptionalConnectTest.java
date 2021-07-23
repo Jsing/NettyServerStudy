@@ -14,25 +14,6 @@ public class ExceptionalConnectTest {
 
 
     @Test
-    @DisplayName("Send before connection")
-    @SneakyThrows
-    void sendBeforeConnectionTest() {
-        TcpServer server = new TcpServer(ServerAddress.info().getPort());
-        server.start();
-        ClientService client = new ClientService();
-        client.init();
-
-        client.beginConnectUntilSuccess(ServerAddress.info());
-
-        boolean result = client.send("Test");
-
-        Assertions.assertFalse(result);
-
-        client.disconnect();
-        server.shutdown();
-    }
-
-    @Test
     @DisplayName("N Reconnect->Transfer")
     @SneakyThrows
     void reconnectAndTransfer() {
@@ -274,46 +255,6 @@ public class ExceptionalConnectTest {
         server.shutdown();
     }
 
-    @Test
-    @DisplayName("Send Before Connection")
-    @SneakyThrows
-    void sendBeforeConnection() {
-        boolean connected = false;
-
-        TcpServer server = new TcpServer(ServerAddress.info().getPort());
-        ClientService client = new ClientService();
-        client.init();
-
-        System.out.println("[Client] beginConnectUntilSuccess");
-        client.beginConnectUntilSuccess(ServerAddress.info());
-
-        System.out.println("[Client] sleep(1000)");
-        Thread.sleep(1000);
-
-        System.out.println("[Client] send() before connection");
-        boolean result = client.send("TEST");
-
-        System.out.println("[Client] send() results = " + result);
-        Assertions.assertFalse(result);
-
-        System.out.println("[Sever] start");
-        server.start();
-
-        System.out.println("[Client] sleep(1000)");
-        Thread.sleep(1000);
-
-        System.out.println("[Client] isActive() = " + client.isActive());
-        Assertions.assertTrue(client.isActive());
-
-        System.out.println("[Client] send() after connection");
-        result = client.send("TEST");
-
-        System.out.println("[Client] send() results = " + result);
-        Assertions.assertTrue(result);
-
-        client.disconnect();
-        server.shutdown();
-    }
 
     @Test
     @DisplayName("Simple Transfer")
@@ -330,38 +271,6 @@ public class ExceptionalConnectTest {
         transfer(server, client);
 
         client.disconnect();
-        server.shutdown();
-    }
-
-    @Test
-    @DisplayName("전송")
-    @SneakyThrows
-    void sendTest() throws Exception {
-        TcpServer server = new TcpServer(ServerAddress.info().getPort());
-        server.start();
-        ClientService client = new ClientService();
-        client.init();
-        client.connectUntilSuccess(ServerAddress.info());
-
-        System.out.println("Action : client.send()");
-        client.send("client.send()");
-
-        System.out.println("Action : client.sendAndLog()");
-        client.sendAndLog("client.sendAndLog()");
-
-        System.out.println("Action : Server.shutdown()");
-        server.shutdown();
-
-        System.out.println("Action : client.send()");
-        client.send("client.send()");
-
-        System.out.println("Action : client.sendAndLog()");
-        client.sendAndLog("client.sendAndLog()");
-
-        System.out.println("Action : client.disconnect()");
-        client.disconnect();
-
-        System.out.println("Action : server.shutdown()");
         server.shutdown();
     }
 

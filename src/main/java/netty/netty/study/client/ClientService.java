@@ -65,16 +65,12 @@ public class ClientService {
         tcpClient.disconnect();
     }
 
-    public boolean beginUserTask(Runnable task, long initialDelay, long period, TimeUnit unit) {
-        return tcpClient.beginUserTask(task, initialDelay, period, unit);
+    public boolean scheduleEventLoopTask(Runnable task, long initialDelay, long period, TimeUnit unit) {
+        return tcpClient.scheduleEventLoopTask(task, initialDelay, period, unit);
     }
 
     public boolean send(Object msg) {
         return tcpClient.send(msg);
-    }
-
-    public boolean sendAndLog(Object msg) {
-        return tcpClient.sendAndLog(msg);
     }
 
     public boolean isActive() {
